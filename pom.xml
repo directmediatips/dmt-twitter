@@ -4,11 +4,11 @@
 
   <groupId>com.directmediatips</groupId>
   <artifactId>dmt-twitter</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>directmedia</name>
-  <url>http://maven.apache.org</url>
+  <url>http://directmediatips.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,12 +23,12 @@
     <dependency>
       <groupId>com.directmediatips</groupId>
       <artifactId>dmt-google</artifactId>
-      <version>0.0.1</version>
+      <version>0.0.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.directmediatips</groupId>
       <artifactId>dmt-data</artifactId>
-      <version>0.0.1</version>
+      <version>0.0.2-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>
