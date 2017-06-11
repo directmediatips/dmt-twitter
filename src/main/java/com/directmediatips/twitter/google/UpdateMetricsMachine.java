@@ -1,4 +1,4 @@
-package com.directmediatips.twitter;
+package com.directmediatips.twitter.google;
 
 /*
  * Copyright 2017, Bruno Lowagie, Wil-Low BVBA
@@ -17,46 +17,46 @@ package com.directmediatips.twitter;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import twitter4j.DirectMessage;
-import twitter4j.ResponseList;
+import com.directmediatips.google.sheets.twitter.TwitterMetrics;
+import com.directmediatips.twitter.AbstractTwitterMachine;
+
 import twitter4j.TwitterException;
-import twitter4j.api.DirectMessagesResources;
+import twitter4j.User;
 
 /**
- * Automatically removes all DMs.
+ * Updates the Twitter metrics in a Google sheets document.
  */
-public class RemoveDMMachine extends AbstractTwitterMachine {
+public class UpdateMetricsMachine extends AbstractTwitterMachine {
 	
 	/**
-	 * Creates an UnfriendMachine instance.
-	 * @param account	a Twitter account screen name
-	 * @throws IOException
+	 * Creates an UpdateMetricsMachine instance.
+	 * @param account	the screen name of a Twitter account
 	 * @throws SQLException
+	 * @throws IOException
 	 */
-	public RemoveDMMachine(String account) throws IOException, SQLException {
+	public UpdateMetricsMachine(String account) throws SQLException, IOException {
 		super(account);
 	}
-
+	
 	/**
-	 * Starts following accounts.
+	 * Gets a twitter user and updates the metrics of that user in a Google
+	 * Sheets document.
 	 * @see com.directmediatips.twitter.AbstractTwitterMachine#go()
 	 */
 	@Override
 	public void go() throws SQLException, TwitterException {
-		DirectMessagesResources resources = twitter.directMessages();
-		ResponseList<DirectMessage> list = resources.getDirectMessages();
-		for (DirectMessage dm : list) {
-			System.out.println("From: " + dm.getSenderScreenName());
-			System.out.println("To: "+ dm.getRecipientScreenName());
-			System.out.println(dm.getCreatedAt());
-			System.out.println(dm.getText());
-			System.out.println("-----------------");
-			try {
-				twitter.destroyDirectMessage(dm.getId());
-			}
-			catch(TwitterException e) {
-				System.out.println(e.getMessage());
-			}
+		User user = twitter.showUser(twitter.getId());
+		System.out.println(twitter.getScreenName());
+		try {
+			TwitterMetrics.UpdateMetrics(
+				user.getScreenName(),
+				user.getStatusesCount(),
+				user.getFriendsCount(),
+				user.getFollowersCount(),
+				user.getFavouritesCount());
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
 		}
 	}
 	
@@ -68,10 +68,10 @@ public class RemoveDMMachine extends AbstractTwitterMachine {
 			System.out.println("An argument is required...");
 			return;
 		}
-		System.out.println(String.format("Running RemoveDMMachine for %s...", args[0]));
+		System.out.println(String.format("Running UpdateMetricsMachine for %s...", args[0]));
 		AbstractTwitterMachine app = null;
 		try {
-			app = new RemoveDMMachine(args[0]);
+			app = new UpdateMetricsMachine(args[0]);
 			app.go();
 		}
 		catch(Exception e) {
@@ -80,4 +80,5 @@ public class RemoveDMMachine extends AbstractTwitterMachine {
 		if (app != null)
 			app.close();
 	}
+
 }

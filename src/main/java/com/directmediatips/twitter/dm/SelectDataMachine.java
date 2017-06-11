@@ -1,4 +1,4 @@
-package com.directmediatips.twitter;
+package com.directmediatips.twitter.dm;
 
 /*
  * Copyright 2017, Bruno Lowagie, Wil-Low BVBA

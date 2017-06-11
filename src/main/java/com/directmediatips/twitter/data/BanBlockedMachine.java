@@ -1,4 +1,4 @@
-package com.directmediatips.twitter;
+package com.directmediatips.twitter.data;
 
 /*
  * Copyright 2017, Bruno Lowagie, Wil-Low BVBA
@@ -17,6 +17,8 @@ package com.directmediatips.twitter;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import com.directmediatips.twitter.AbstractTwitterMachine;
 
 import twitter4j.IDs;
 import twitter4j.TwitterException;

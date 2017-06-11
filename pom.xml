@@ -4,7 +4,7 @@
 
   <groupId>com.directmediatips</groupId>
   <artifactId>dmt-twitter</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.2</version>
   <packaging>jar</packaging>
 
   <name>directmedia</name>
@@ -23,12 +23,17 @@
     <dependency>
       <groupId>com.directmediatips</groupId>
       <artifactId>dmt-google</artifactId>
-      <version>0.0.2-SNAPSHOT</version>
+      <version>0.0.2</version>
     </dependency>
     <dependency>
       <groupId>com.directmediatips</groupId>
       <artifactId>dmt-data</artifactId>
-      <version>0.0.2-SNAPSHOT</version>
+      <version>0.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.directmediatips</groupId>
+      <artifactId>dmt-klout</artifactId>
+      <version>0.0.4</version>
     </dependency>
   </dependencies>
 </project>

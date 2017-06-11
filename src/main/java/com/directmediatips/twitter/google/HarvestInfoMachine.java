@@ -1,4 +1,4 @@
-package com.directmediatips.twitter;
+package com.directmediatips.twitter.google;
 
 /*
  * Copyright 2017, Bruno Lowagie, Wil-Low BVBA
@@ -24,6 +24,8 @@ import java.util.Map;
 
 import com.directmediatips.google.sheets.twitter.TwitterHarvest;
 import com.directmediatips.google.sheets.twitter.TwitterHarvest.Account;
+import com.directmediatips.twitter.AbstractTwitterMachine;
+import com.directmediatips.twitter.data.AccountInfoMachine;
 
 import twitter4j.TwitterException;
 import twitter4j.User;
