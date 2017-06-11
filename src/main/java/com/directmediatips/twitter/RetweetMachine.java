@@ -73,6 +73,7 @@ public class RetweetMachine extends AbstractTwitterMachine {
 	 */
 	@Override
 	public void go() throws SQLException, TwitterException {
+		if (maximum == 0) return;
 		List<Status> list = new ArrayList<Status>();
 		harvest(list);
 		tweet(list);
