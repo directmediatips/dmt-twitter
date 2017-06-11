@@ -109,12 +109,21 @@ public abstract class AbstractTwitterMachine extends AbstractDatabaseMachine {
 		if (msg.contains("You've already requested to follow")) {
 			return false;
 		}
+		return isRateLimitExceeded(e);
+	}
+	
+	/**
+	 * Checks if the rate limit was exceeded.
+	 * @param e	the Twitter exception
+	 * @return true if the rate limit was exceeded
+	 */
+	public boolean isRateLimitExceeded(TwitterException e) {
 		RateLimitStatus rls = e.getRateLimitStatus();
 		if (rls != null && rls.getRemaining() == 0) {
 			System.out.println("Rate Limit Status exceeded");
-			return true;
+			sleepRandom(rls.getSecondsUntilReset() * 1000, 20);
 		}
-		return true;
+		return false;
 	}
 	
 	/**
