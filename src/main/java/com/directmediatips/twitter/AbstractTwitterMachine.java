@@ -100,6 +100,9 @@ public abstract class AbstractTwitterMachine extends AbstractDatabaseMachine {
 		if (msg.contains("User has been suspended")) {
 			return false;
 		}
+		if (msg.contains("User not found")) {
+			return false;
+		}
 		if (msg.contains("You can't follow yourself")) {
 			return false;
 		}

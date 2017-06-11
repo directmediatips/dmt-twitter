@@ -28,7 +28,7 @@ import twitter4j.User;
  * Gets all the accounts that weren't banned from the database,
  * and updates their metrics.
  */
-public class AccountUpdateMachine extends AbstractTwitterMachine {
+public class AccountUpdateMachine extends BanBlockedMachine {
 	/** SQL to get ids from the accounts table */
 	public static final String GET_ACCOUNTS =
 			"SELECT id FROM accounts";
@@ -62,12 +62,7 @@ public class AccountUpdateMachine extends AbstractTwitterMachine {
 	public void go() throws SQLException, TwitterException {
 		ResultSet rs = connection.execute(GET_ACCOUNTS);
 		while (rs.next()) {
-			try {
-				updateAccount(rs.getLong(1));
-			}
-			catch(TwitterException e) {
-				showErrorIfNecessary(e);	
-			}
+			updateAccount(rs.getLong(1));
 		}
 	}
 	
@@ -77,23 +72,33 @@ public class AccountUpdateMachine extends AbstractTwitterMachine {
 	 * @throws SQLException
 	 * @throws TwitterException
 	 */
-	public void updateAccount(long id) throws SQLException, TwitterException {
-		User user = twitter.showUser(id);
-		update.setString(1, user.getScreenName());
-		update.setString(2, makeASCII(user.getName()));
-		update.setString(3, makeASCII(user.getLocation()));
-		update.setString(4, user.getLang());
-		update.setString(5, makeASCII(user.getDescription()));
-		update.setString(6, user.getURL());
-		update.setInt(7, user.getFollowersCount());
-		update.setInt(8, user.getFriendsCount());
-		update.setInt(9, user.getStatusesCount());
-		update.setInt(10, user.getFavouritesCount());
-		update.setString(11, user.isProtected() ? "Y" : "N");
-		update.setLong(12, id);
-		update.executeUpdate();
-		System.out.println(String.format("Account %s (%s) updated.", id, user.getScreenName()));
-		needsSleep(250);
+	public void updateAccount(long id) throws SQLException {
+		try {
+			User user = twitter.showUser(id);
+			update.setString(1, user.getScreenName());
+			update.setString(2, makeASCII(user.getName()));
+			update.setString(3, makeASCII(user.getLocation()));
+			update.setString(4, user.getLang());
+			update.setString(5, makeASCII(user.getDescription()));
+			update.setString(6, user.getURL());
+			update.setInt(7, user.getFollowersCount());
+			update.setInt(8, user.getFriendsCount());
+			update.setInt(9, user.getStatusesCount());
+			update.setInt(10, user.getFavouritesCount());
+			update.setString(11, user.isProtected() ? "Y" : "N");
+			update.setLong(12, id);
+			update.executeUpdate();
+			System.out.println(String.format("Account %s (%s) updated.", id, user.getScreenName()));
+			needsSleep(250);
+		}
+		catch (TwitterException e) {
+			showErrorIfNecessary(e);
+			if (e.getErrorMessage().contains("User not found")) {
+    			ban.setLong(1, id);
+   				ban.executeQuery();
+   				System.out.println(String.format("User %s not found; adding to the ban list", id));
+			}
+		}
 	}
 	
 	/**
