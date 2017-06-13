@@ -33,7 +33,10 @@ public class UnfriendMachine extends AbstractTwitterMachine {
 	public static final String SELECT_UNFOLLOW =
 		"SELECT id FROM %s_accounts"
 		+ " WHERE wefollow=1 AND theyfollow=0"
-		+ " AND startfollow < DATE_SUB(NOW(), INTERVAL 20 DAY)";
+		+ " AND startfollow < DATE_SUB(NOW(), INTERVAL %s DAY)";
+	
+	/** The number of days we wait before unfollowing someone. */
+	protected int waitDays;
 	
 	/**
 	 * Creates an UnfriendMachine instance.
@@ -43,6 +46,12 @@ public class UnfriendMachine extends AbstractTwitterMachine {
 	 */
 	public UnfriendMachine(String account) throws IOException, SQLException {
 		super(account);
+		try {
+			waitDays = Integer.parseInt(properties.getProperty("WaitDays"));
+		}
+		catch (Exception e) {
+			waitDays = 20;
+		}
 	}
 
 	/**
@@ -78,11 +87,11 @@ public class UnfriendMachine extends AbstractTwitterMachine {
 	 * @throws SQLException
 	 */
 	public void unfriendUninterested() throws SQLException {
-		ResultSet rs = connection.execute(String.format(SELECT_UNFOLLOW, account));
+		ResultSet rs = connection.execute(String.format(SELECT_UNFOLLOW, account, waitDays));
 		while (rs.next()) {
 			try {
 				twitter.destroyFriendship(rs.getLong("id"));
-				System.out.println(String.format("Unfriended account %s because it doesn't follow back", rs.getLong("id")));
+				System.out.println(String.format("Unfriended account %s because it didn't follow back within %s", rs.getLong("id"), waitDays));
 			} catch (TwitterException e) {
 				showErrorIfNecessary(e);
 			}
