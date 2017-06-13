@@ -33,7 +33,7 @@ public class UnfriendMachine extends AbstractTwitterMachine {
 	public static final String SELECT_UNFOLLOW =
 		"SELECT id FROM %s_accounts"
 		+ " WHERE wefollow=1 AND theyfollow=0"
-		+ " AND wefollowedon < DATE_SUB(NOW(), INTERVAL 20 DAY)";
+		+ " AND startfollow < DATE_SUB(NOW(), INTERVAL 20 DAY)";
 	
 	/**
 	 * Creates an UnfriendMachine instance.

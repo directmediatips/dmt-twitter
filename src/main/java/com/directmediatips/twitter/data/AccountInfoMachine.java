@@ -49,18 +49,21 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 			"UPDATE %s_accounts SET wefollowedon = CURRENT_TIMESTAMP WHERE wefollow = 1";
 	/** SQL Statement that pretends that we aren't following any one anymore. */
 	public static final String RESET_WE_FOLLOW = "UPDATE %s_accounts SET wefollow = 0";
-	/** SQL linking a record for an account. */
+	/** SQL Statement that registers our friends. */
 	public static final String SET_WE_FOLLOW =
 			"UPDATE %s_accounts SET wefollow = 1, wefollowedon = CURRENT_TIMESTAMP WHERE id = ?";
+	/** SQL Statement that updates the date we started following someone. */
+	public static final String SET_STARTFOLLOW =
+			"UPDATE %s_accounts SET startfollow = wefollowedon WHERE startfollow IS NULL";
 	
 	// they follow statements
 	
-	/** SQL Statement that updates the time stamp for every one we follow. */
+	/** SQL Statement that updates the time stamp for every one who follows us. */
 	public static final String THEY_FOLLOWED_ON =
 			"UPDATE %s_accounts SET theyfollowedon = CURRENT_TIMESTAMP WHERE theyfollow = 1";
-	/** SQL Statement that pretends that we aren't following any one anymore. */
+	/** SQL Statement that pretends that no one is following us anymore. */
 	public static final String RESET_THEY_FOLLOW = "UPDATE %s_accounts SET theyfollow = 0";
-	/** SQL linking a record for an account. */
+	/** SQL Statement that registers our followers. */
 	public static final String SET_THEY_FOLLOW =
 			"UPDATE %s_accounts SET theyfollow = 1, theyfollowedon = CURRENT_TIMESTAMP WHERE id = ?";
 	
@@ -69,7 +72,7 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	/** SQL checking if an account record exists. */
 	public static final String ACCOUNT_EXISTS =
 		"SELECT count(*) FROM accounts WHERE id = ?";
-	/** SQL checking if an account record exists. */
+	/** SQL checking if an account record is linked. */
 	public static final String ACCOUNT_LINKED =
 		"SELECT count(*) FROM %s_accounts WHERE id = ?";
 	
@@ -131,6 +134,7 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 				setWeFollow(id);
     		}
     	} while (ids.hasNext());
+    	connection.execute(String.format(SET_STARTFOLLOW, account));
 	}
 	
 	/**
