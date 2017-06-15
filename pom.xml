@@ -7,9 +7,10 @@
   <version>0.1.0</version>
   <packaging>jar</packaging>
 
-  <name>directmedia</name>
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>Set of classes to automate your Twitter account.</description>
   <url>http://directmediatips.com</url>
-
+  
   <distributionManagement>
     <snapshotRepository>
       <id>ossrh</id>
