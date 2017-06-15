@@ -93,9 +93,10 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Creates an AccountInfoMachine instance.
-	 * @param account	a Twitter account screen name
-	 * @throws IOException
-	 * @throws SQLException
+	 *
+	 * @param account a Twitter account screen name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SQLException the SQL exception
 	 */
 	public AccountInfoMachine(String account) throws IOException, SQLException {
 		super(account);
@@ -109,6 +110,9 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 
 	/**
 	 * Gets a list of friends and followers, and puts that information in a database.
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 * @see com.directmediatips.twitter.AbstractTwitterMachine#go()
 	 */
 	@Override
@@ -120,8 +124,9 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	/**
 	 * Asks twitter for all the accounts we follow, and updates the
 	 * database accordingly.
-	 * @throws SQLException
-	 * @throws TwitterException
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 */
 	public void listFriends() throws SQLException, TwitterException {
     	IDs ids = twitter.getFriendsIDs(-1);
@@ -140,8 +145,9 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	/**
 	 * Asks twitter for all the accounts that follow us, and updates the
 	 * database accordingly.
-	 * @throws SQLException
-	 * @throws TwitterException
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 */
 	public void listFollowers() throws SQLException, TwitterException {
     	IDs ids = twitter.getFollowersIDs(-1);
@@ -165,9 +171,10 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Creates an account for a Twitter profile in the database.
-	 * @param id	the id of the Twitter profile.
-	 * @throws SQLException
-	 * @throws TwitterException
+	 *
+	 * @param id the id of the Twitter profile.
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 */
 	public void insertAccount(long id) throws SQLException, TwitterException {
 		if (exists(id)) return;
@@ -191,9 +198,10 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Checks if an account with a specific id exists.
-	 * @param	id	a Twitter id
-	 * @return	true if an account with that id exists
-	 * @throws SQLException 
+	 *
+	 * @param id a Twitter id
+	 * @return true if an account with that id exists
+	 * @throws SQLException the SQL exception
 	 */
 	public boolean exists(long id) throws SQLException {
 		exists.setLong(1, id);
@@ -206,8 +214,9 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Links an account to our account.
-	 * @param id	the id of the account we want to link.
-	 * @throws SQLException
+	 *
+	 * @param id the id of the account we want to link.
+	 * @throws SQLException the SQL exception
 	 */
 	public void linkAccount(long id) throws SQLException {
 		if (isLinked(id)) return;
@@ -218,9 +227,10 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Checks if an account with a specific id is linked to our account.
-	 * @param	id	a Twitter id
-	 * @return	true if an account with that id is linked to our account.
-	 * @throws SQLException 
+	 *
+	 * @param id a Twitter id
+	 * @return true if an account with that id is linked to our account.
+	 * @throws SQLException the SQL exception
 	 */
 	public boolean isLinked(long id) throws SQLException {
 		linked.setLong(1, id);
@@ -233,8 +243,9 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Update a record for an account that we follow.
-	 * @param id	the id of the account we want to link.
-	 * @throws SQLException
+	 *
+	 * @param id the id of the account we want to link.
+	 * @throws SQLException the SQL exception
 	 */
 	public void setWeFollow(long id) throws SQLException {
 		updateWeFollow.setLong(1, id);
@@ -243,8 +254,9 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Update a record for an account that we follow.
-	 * @param id	the id of the account we want to link.
-	 * @throws SQLException
+	 *
+	 * @param id the id of the account we want to link.
+	 * @throws SQLException the SQL exception
 	 */
 	public void setTheyFollow(long id) throws SQLException {
 		updateTheyFollow.setLong(1, id);
@@ -253,6 +265,8 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {

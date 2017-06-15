@@ -51,9 +51,10 @@ public class RetweetMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Creates a RetweetMachine instance.
-	 * @param account	the screen name of a Twitter account
-	 * @throws SQLException
-	 * @throws IOException
+	 *
+	 * @param account the screen name of a Twitter account
+	 * @throws SQLException the SQL exception
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public RetweetMachine(String account) throws SQLException, IOException {
 		super(account);
@@ -69,6 +70,9 @@ public class RetweetMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Gets a list of potential tweets, and retweets a random selection.
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 * @see com.directmediatips.twitter.AbstractTwitterMachine#go()
 	 */
 	@Override
@@ -81,9 +85,10 @@ public class RetweetMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Harvests a series of tweets from selected accounts.
-	 * @param list	a list that will be populated with tweet IDs.
-	 * @throws SQLException
-	 * @throws TwitterException
+	 *
+	 * @param list a list that will be populated with tweet IDs.
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 */
 	public void harvest(List<Status> list) throws SQLException, TwitterException {
 		ResultSet rs = connection.execute(String.format(RETWEET_ACCOUNTS, account));
@@ -97,8 +102,10 @@ public class RetweetMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Processes a status update.
-	 * @param	status the Status to update
-	 * @throws TwitterException 
+	 *
+	 * @param list the list
+	 * @param status the Status to update
+	 * @throws SQLException the SQL exception
 	 */
 	public void process(List<Status> list, Status status) throws SQLException {
 		// Don't retweet if it might be a sensitive tweet
@@ -126,9 +133,10 @@ public class RetweetMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Checks if a tweet was already retweeted.
-	 * @param id	the ID of the tweet that might be retweeted
-	 * @return	true if the tweet was already retweeted
-	 * @throws SQLException
+	 *
+	 * @param id the ID of the tweet that might be retweeted
+	 * @return true if the tweet was already retweeted
+	 * @throws SQLException the SQL exception
 	 */
 	public boolean isRetweeted(long id) throws SQLException {
 		retweeted.setString(1, account);
@@ -142,9 +150,10 @@ public class RetweetMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Tweets a selection of tweets from a list.
-	 * @param list	a list with tweet IDs
-	 * @throws SQLException
-	 * @throws TwitterException
+	 *
+	 * @param list a list with tweet IDs
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 */
 	public void tweet(List<Status> list) throws SQLException, TwitterException {
 		Collections.shuffle(list);
@@ -169,6 +178,8 @@ public class RetweetMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {

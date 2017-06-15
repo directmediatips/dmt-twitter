@@ -33,9 +33,9 @@ public class SelectDataMachine extends AbstractDatabaseMachine {
 	
 	/**
 	 * Creates an SelectDataMachine instance.
-	 * @param account	a Twitter account screen name
-	 * @throws IOException
-	 * @throws SQLException
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SQLException the SQL exception
 	 */
 	public SelectDataMachine() throws IOException, SQLException {
 		super();
@@ -43,8 +43,9 @@ public class SelectDataMachine extends AbstractDatabaseMachine {
 	
 	/**
 	 * Loops over the criteria, and tries to match accounts to those criteria.
-	 * @throws SQLException
-	 * @throws IOException 
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void go() throws SQLException, IOException {
 		TwitterRichData richData = new TwitterRichData();
@@ -64,6 +65,8 @@ public class SelectDataMachine extends AbstractDatabaseMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		System.out.println("Running SelectDataMachine...");

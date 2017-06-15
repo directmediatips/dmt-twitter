@@ -37,14 +37,14 @@ import twitter4j.conf.ConfigurationBuilder;
  */
 public class DirectMessageMachine {
 
-    /** Randomizer */
+    /**  Randomizer. */
 	protected Random rand = new Random();
 	
 	/**
 	 * Creates an EnrichDataMachine instance.
-	 * @param account	a Twitter account screen name
-	 * @throws IOException
-	 * @throws SQLException
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SQLException the SQL exception
 	 */
 	public DirectMessageMachine() throws IOException, SQLException {
 		super();
@@ -52,8 +52,9 @@ public class DirectMessageMachine {
 	
 	/**
 	 * Gets account info from Google sheets and sends DMs based on that info.
-	 * @throws SQLException
-	 * @throws IOException 
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void go() throws SQLException, IOException {
 		TwitterRichData richData = new TwitterRichData();
@@ -108,13 +109,14 @@ public class DirectMessageMachine {
 	
 	/**
 	 * Try to send a direct message to an account with a specific id
-	 * from one of the accounts from our list of accounts
-	 * @param message	the message
-	 * @param to	the id of the account we want to send a DM to
-	 * @param from	the index of an account in the <code>accounts</code> list
-	 * @param accounts	a list containing <code>Twitter</code> objects
-	 * @param count	an array keeping track of the messages that have been sent
-	 * @return	<code>true</code> if the DM was successfully sent
+	 * from one of the accounts from our list of accounts.
+	 *
+	 * @param message the message
+	 * @param to the id of the account we want to send a DM to
+	 * @param from the index of an account in the <code>accounts</code> list
+	 * @param accounts a list containing <code>Twitter</code> objects
+	 * @param count an array keeping track of the messages that have been sent
+	 * @return <code>true</code> if the DM was successfully sent
 	 */
 	public boolean sendDM(String message, long to, int from, List<Twitter> accounts, int[] count) {
 		// We can only send 250 messages a day
@@ -136,9 +138,10 @@ public class DirectMessageMachine {
 	
 	/**
 	 * Gets a Twitter instance for an account.
-	 * @param account	the screen name of one of our accounts
-	 * @return	a Twitter instance
-	 * @throws IOException
+	 *
+	 * @param account the screen name of one of our accounts
+	 * @return a Twitter instance
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public Twitter getTwitterInstance(String account) throws IOException {
 		Properties properties = new Properties();
@@ -155,6 +158,8 @@ public class DirectMessageMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		System.out.println("Running DirectMessageMachine...");

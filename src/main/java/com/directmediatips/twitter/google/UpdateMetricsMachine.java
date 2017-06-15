@@ -30,9 +30,10 @@ public class UpdateMetricsMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Creates an UpdateMetricsMachine instance.
-	 * @param account	the screen name of a Twitter account
-	 * @throws SQLException
-	 * @throws IOException
+	 *
+	 * @param account the screen name of a Twitter account
+	 * @throws SQLException the SQL exception
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public UpdateMetricsMachine(String account) throws SQLException, IOException {
 		super(account);
@@ -41,6 +42,9 @@ public class UpdateMetricsMachine extends AbstractTwitterMachine {
 	/**
 	 * Gets a twitter user and updates the metrics of that user in a Google
 	 * Sheets document.
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 * @see com.directmediatips.twitter.AbstractTwitterMachine#go()
 	 */
 	@Override
@@ -62,6 +66,8 @@ public class UpdateMetricsMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {

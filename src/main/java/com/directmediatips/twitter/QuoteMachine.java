@@ -17,21 +17,6 @@ package com.directmediatips.twitter;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-/*
- * Copyright 2017, Bruno Lowagie, Wil-Low BVBA
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License. You may obtain
- * a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the  * specific language governing permissions and
- * limitations under the License.
- */
-
 import java.sql.SQLException;
 
 import twitter4j.TwitterException;
@@ -53,9 +38,10 @@ public class QuoteMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Creates a QuoteMachine instance.
-	 * @param account	the screen name of a Twitter account
-	 * @throws SQLException
-	 * @throws IOException
+	 *
+	 * @param account the screen name of a Twitter account
+	 * @throws SQLException the SQL exception
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public QuoteMachine(String account) throws SQLException, IOException {
 		super(account);
@@ -64,6 +50,9 @@ public class QuoteMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Gets a single quote from the database, and tweets it.
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 * @see com.directmediatips.twitter.AbstractTwitterMachine#go()
 	 */
 	@Override
@@ -85,6 +74,8 @@ public class QuoteMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {

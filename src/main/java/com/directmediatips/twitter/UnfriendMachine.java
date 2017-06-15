@@ -30,6 +30,8 @@ public class UnfriendMachine extends AbstractTwitterMachine {
 	public static final String SELECT_BANNED =
 		"SELECT a.id FROM accounts a, %s_accounts aa"
 		+ " WHERE a.banned=1 AND aa.wefollow=1 AND a.id = aa.id";
+	
+	/** The Constant SELECT_UNFOLLOW. */
 	public static final String SELECT_UNFOLLOW =
 		"SELECT id FROM %s_accounts"
 		+ " WHERE wefollow=1 AND theyfollow=0"
@@ -40,9 +42,10 @@ public class UnfriendMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Creates an UnfriendMachine instance.
-	 * @param account	a Twitter account screen name
-	 * @throws IOException
-	 * @throws SQLException
+	 *
+	 * @param account a Twitter account screen name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SQLException the SQL exception
 	 */
 	public UnfriendMachine(String account) throws IOException, SQLException {
 		super(account);
@@ -56,6 +59,9 @@ public class UnfriendMachine extends AbstractTwitterMachine {
 
 	/**
 	 * Starts following accounts.
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 * @see com.directmediatips.twitter.AbstractTwitterMachine#go()
 	 */
 	@Override
@@ -66,8 +72,8 @@ public class UnfriendMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Unfriends every account that was banned.
-	 * 
-	 * @throws SQLException
+	 *
+	 * @throws SQLException the SQL exception
 	 */
 	public void unfriendBanned() throws SQLException {
 		ResultSet rs = connection.execute(String.format(SELECT_BANNED, account));
@@ -83,8 +89,8 @@ public class UnfriendMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Unfriends every account that didn't follow us back 20 days after the account was created.
-	 * 
-	 * @throws SQLException
+	 *
+	 * @throws SQLException the SQL exception
 	 */
 	public void unfriendUninterested() throws SQLException {
 		ResultSet rs = connection.execute(String.format(SELECT_UNFOLLOW, account, waitDays));
@@ -100,6 +106,8 @@ public class UnfriendMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {

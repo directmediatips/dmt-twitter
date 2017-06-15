@@ -64,9 +64,10 @@ public class HarvestInfoMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Creates a HarvestInfoMachine instance.
-	 * @param account	a Twitter account screen name
-	 * @throws IOException
-	 * @throws SQLException
+	 *
+	 * @param account a Twitter account screen name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SQLException the SQL exception
 	 */
 	public HarvestInfoMachine(String account) throws IOException, SQLException {
 		super(account);
@@ -79,8 +80,9 @@ public class HarvestInfoMachine extends AbstractTwitterMachine {
 	/**
 	 * Gets the harvest info from a Google spreadsheets and compares
 	 * it with what is stored in the database; adapts if necessary.
-	 * @throws SQLException
-	 * @throws IOException 
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 */
 	public void go() throws SQLException, TwitterException {
 		try {
@@ -140,10 +142,11 @@ public class HarvestInfoMachine extends AbstractTwitterMachine {
 	}
 	
 	/**
-	 * Updates harvest data in the database
-	 * @param id	the account id of the harvest account
-	 * @param harvest	the harvest data
-	 * @throws SQLException
+	 * Updates harvest data in the database.
+	 *
+	 * @param id the account id of the harvest account
+	 * @param harvest the harvest data
+	 * @throws SQLException the SQL exception
 	 */
 	protected void update(long id, Account harvest) throws SQLException {
 		System.out.println(String.format("Updating info for %s (%s)", id, harvest.screenname));
@@ -186,6 +189,8 @@ public class HarvestInfoMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {

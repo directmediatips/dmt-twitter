@@ -41,9 +41,10 @@ public class UpdateKloutMachine {
 	
 	/**
 	 * Creates an UpdateMetricsMachine instance.
-	 * @param account	the screen name of a Twitter account
-	 * @throws SQLException
-	 * @throws IOException
+	 *
+	 * @param account the screen name of a Twitter account
+	 * @throws SQLException the SQL exception
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public UpdateKloutMachine(String account) throws SQLException, IOException {
 		this.account = account;
@@ -56,7 +57,8 @@ public class UpdateKloutMachine {
 	/**
 	 * Gets a Klout score from the Klout API and puts it in a Google Sheets
 	 * document.
-	 * @throws IOException 
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void go() throws IOException {
 		User user = klout.getUser(id);
@@ -65,6 +67,8 @@ public class UpdateKloutMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {

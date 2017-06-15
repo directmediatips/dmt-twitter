@@ -28,6 +28,7 @@ import twitter4j.User;
  */
 public class RemoveInactiveMachine extends AbstractTwitterMachine {
 
+	/** The Constant SELECT_UNFOLLOW. */
 	public static final String SELECT_UNFOLLOW =
 		"SELECT id FROM %s_accounts WHERE wefollow=1";
 
@@ -36,9 +37,10 @@ public class RemoveInactiveMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Creates a RemoveInactiveMachine instance.
-	 * @param account	a Twitter account screen name
-	 * @throws IOException
-	 * @throws SQLException
+	 *
+	 * @param account a Twitter account screen name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SQLException the SQL exception
 	 */
 	public RemoveInactiveMachine(String account) throws IOException, SQLException {
 		super(account);
@@ -52,6 +54,9 @@ public class RemoveInactiveMachine extends AbstractTwitterMachine {
 
 	/**
 	 * Starts examining accounts (and removing the inactive ones).
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 * @see com.directmediatips.twitter.AbstractTwitterMachine#go()
 	 */
 	@Override
@@ -80,6 +85,8 @@ public class RemoveInactiveMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {

@@ -54,9 +54,10 @@ public class FollowMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Creates an FollowMachine instance.
-	 * @param account	a Twitter account screen name
-	 * @throws IOException
-	 * @throws SQLException
+	 *
+	 * @param account a Twitter account screen name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SQLException the SQL exception
 	 */
 	public FollowMachine(String account) throws IOException, SQLException {
 		super(account);
@@ -72,6 +73,9 @@ public class FollowMachine extends AbstractTwitterMachine {
 
 	/**
 	 * Starts following accounts.
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 * @see com.directmediatips.twitter.AbstractTwitterMachine#go()
 	 */
 	@Override
@@ -84,9 +88,9 @@ public class FollowMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Harvests friends of some other account.
-	 * 
-	 * @param list	the list to which we will add the accounts
-	 * @throws SQLException
+	 *
+	 * @param list the list to which we will add the accounts
+	 * @throws SQLException the SQL exception
 	 */
 	public void harvestFromFriends(List<Long> list) throws SQLException {
 		ResultSet rs = connection.execute(String.format(SELECT_FRIENDS_TO_FOLLOW, account));
@@ -102,9 +106,9 @@ public class FollowMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Harvests friends of some other account.
-	 * 
-	 * @param list	the list to which we will add the accounts
-	 * @throws SQLException
+	 *
+	 * @param list the list to which we will add the accounts
+	 * @throws SQLException the SQL exception
 	 */
 	public void harvestFromFollowers(List<Long> list) throws SQLException {
 		ResultSet rs = connection.execute(String.format(SELECT_FOLLOWERS_TO_FOLLOW, account));
@@ -120,9 +124,10 @@ public class FollowMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Tries to add a series of IDs to the list of possible accounts to follow.
-	 * @param list	the list that will be populated
-	 * @param ids	a Twitter object consisting of IDs
-	 * @throws SQLException
+	 *
+	 * @param list the list that will be populated
+	 * @param ids a Twitter object consisting of IDs
+	 * @throws SQLException the SQL exception
 	 */
 	public void addToList(List<Long> list, IDs ids) throws SQLException {
 		for (long id : ids.getIDs()) {
@@ -132,9 +137,10 @@ public class FollowMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Checks if we already follow an account with this id.
-	 * @param id	an account id
-	 * @return	true if we already follow this account
-	 * @throws SQLException
+	 *
+	 * @param id an account id
+	 * @return true if we already follow this account
+	 * @throws SQLException the SQL exception
 	 */
 	public boolean doWeFollow(long id) throws SQLException {
 		doWeFollow.setLong(1, id);
@@ -147,9 +153,10 @@ public class FollowMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Checks if an account is banned.
-	 * @param	id	a Twitter id
-	 * @return	true if an account with that id is banned
-	 * @throws SQLException 
+	 *
+	 * @param id a Twitter id
+	 * @return true if an account with that id is banned
+	 * @throws SQLException the SQL exception
 	 */
 	public boolean isBanned(long id) throws SQLException {
 		isBanned.setLong(1, id);
@@ -162,8 +169,9 @@ public class FollowMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Follows a random selection from the list of accounts that might be interesting to follow.
-	 * @param list
-	 * @throws SQLException 
+	 *
+	 * @param list the list
+	 * @throws SQLException the SQL exception
 	 */
 	public void process(List<Long> list) throws SQLException {
 		int followed = 0;
@@ -189,6 +197,8 @@ public class FollowMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {

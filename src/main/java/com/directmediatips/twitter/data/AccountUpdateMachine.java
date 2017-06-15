@@ -29,7 +29,8 @@ import twitter4j.User;
  * and updates their metrics.
  */
 public class AccountUpdateMachine extends BanBlockedMachine {
-	/** SQL to get ids from the accounts table */
+	
+	/**  SQL to get ids from the accounts table. */
 	public static final String GET_ACCOUNTS =
 			"SELECT id FROM accounts";
 	
@@ -45,9 +46,10 @@ public class AccountUpdateMachine extends BanBlockedMachine {
 	
 	/**
 	 * Creates an AccountUpdateMachine instance.
-	 * @param account	a Twitter account screen name
-	 * @throws IOException
-	 * @throws SQLException
+	 *
+	 * @param account a Twitter account screen name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SQLException the SQL exception
 	 */
 	public AccountUpdateMachine(String account) throws IOException, SQLException {
 		super(account);
@@ -56,6 +58,9 @@ public class AccountUpdateMachine extends BanBlockedMachine {
 
 	/**
 	 * Gets a list of friends and followers, and puts that information in a database.
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 * @see com.directmediatips.twitter.AbstractTwitterMachine#go()
 	 */
 	@Override
@@ -68,9 +73,9 @@ public class AccountUpdateMachine extends BanBlockedMachine {
 	
 	/**
 	 * Updates an account of a Twitter profile in the database.
-	 * @param id	the id of the Twitter profile.
-	 * @throws SQLException
-	 * @throws TwitterException
+	 *
+	 * @param id the id of the Twitter profile.
+	 * @throws SQLException the SQL exception
 	 */
 	public void updateAccount(long id) throws SQLException {
 		try {
@@ -103,6 +108,8 @@ public class AccountUpdateMachine extends BanBlockedMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {

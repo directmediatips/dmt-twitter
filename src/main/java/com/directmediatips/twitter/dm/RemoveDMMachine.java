@@ -31,9 +31,10 @@ public class RemoveDMMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Creates an UnfriendMachine instance.
-	 * @param account	a Twitter account screen name
-	 * @throws IOException
-	 * @throws SQLException
+	 *
+	 * @param account a Twitter account screen name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SQLException the SQL exception
 	 */
 	public RemoveDMMachine(String account) throws IOException, SQLException {
 		super(account);
@@ -41,6 +42,9 @@ public class RemoveDMMachine extends AbstractTwitterMachine {
 
 	/**
 	 * Starts following accounts.
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 * @see com.directmediatips.twitter.AbstractTwitterMachine#go()
 	 */
 	@Override
@@ -64,6 +68,8 @@ public class RemoveDMMachine extends AbstractTwitterMachine {
 	
 	/**
 	 * Starts and runs the Twitter machine.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {

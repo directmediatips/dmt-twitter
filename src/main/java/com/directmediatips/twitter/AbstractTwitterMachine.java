@@ -34,7 +34,7 @@ import twitter4j.conf.ConfigurationBuilder;
  */
 public abstract class AbstractTwitterMachine extends AbstractDatabaseMachine {
 	
-    /** Randomizer */
+    /**  Randomizer. */
 	public static final Random RANDOM = new Random();
 
 	/** Our twitter4j instance. */
@@ -48,9 +48,10 @@ public abstract class AbstractTwitterMachine extends AbstractDatabaseMachine {
 	
 	/**
 	 * Initializes the Twitter client.
-	 * @param account	the screen name of a Twitter account
-	 * @throws IOException 
-	 * @throws SQLException
+	 *
+	 * @param account the screen name of a Twitter account
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SQLException the SQL exception
 	 */
 	public AbstractTwitterMachine(String account) throws IOException, SQLException {
 		super();
@@ -69,6 +70,9 @@ public abstract class AbstractTwitterMachine extends AbstractDatabaseMachine {
 	
 	/**
 	 * Executes whatever needs to be executed.
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws TwitterException the twitter exception
 	 */
 	public abstract void go() throws SQLException, TwitterException;
 
@@ -76,6 +80,8 @@ public abstract class AbstractTwitterMachine extends AbstractDatabaseMachine {
 	 * Check the counter to find out if we're in danger of surpassing
 	 * the Twitter limits for getting user information; if so, sleep for
 	 * about five minutes.
+	 *
+	 * @param maxCount the max count
 	 */
 	public void needsSleep(int maxCount) {
 		if (count++ > maxCount) {
@@ -86,8 +92,9 @@ public abstract class AbstractTwitterMachine extends AbstractDatabaseMachine {
 	
 	/**
 	 * Checks if a TwitterException can be safely ignored.
-	 * @param	code	the code of the TwitterException
-	 * @return	true if the exception can be ignored
+	 *
+	 * @param e the e
+	 * @return true if the exception can be ignored
 	 */
 	public boolean isBreakingError(TwitterException e) {
 		String msg = e.getErrorMessage();
@@ -135,6 +142,8 @@ public abstract class AbstractTwitterMachine extends AbstractDatabaseMachine {
 	
 	/**
 	 * Checks if a TwitterException can be safely ignored.
+	 *
+	 * @param e the e
 	 */
 	public void showErrorIfNecessary(TwitterException e) {
 		if (isBreakingError(e))
@@ -142,9 +151,10 @@ public abstract class AbstractTwitterMachine extends AbstractDatabaseMachine {
 	}
 	
 	/**
-	 * Sleep a random number of seconds
-	 * @param	minimum	a minimum number of seconds
-	 * @param	extra	a maximum of extra seconds
+	 * Sleep a random number of seconds.
+	 *
+	 * @param minimum a minimum number of seconds
+	 * @param extra a maximum of extra seconds
 	 */
 	public void sleepRandom(int minimum, int extra) {
 		int seconds = minimum + RANDOM.nextInt(extra);
