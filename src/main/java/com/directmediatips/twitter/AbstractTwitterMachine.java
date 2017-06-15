@@ -112,7 +112,11 @@ public abstract class AbstractTwitterMachine extends AbstractDatabaseMachine {
 		if (msg.contains("You've already requested to follow")) {
 			return false;
 		}
-		return isRateLimitExceeded(e);
+		if (e.getMessage().contains("The Twitter servers are up, but overloaded with requests.")) {
+			sleepRandom(300, 300);
+			return false;
+		}
+		return isPleaseWait(e);
 	}
 	
 	/**
@@ -120,11 +124,11 @@ public abstract class AbstractTwitterMachine extends AbstractDatabaseMachine {
 	 * @param e	the Twitter exception
 	 * @return true if the rate limit was exceeded
 	 */
-	public boolean isRateLimitExceeded(TwitterException e) {
+	public boolean isPleaseWait(TwitterException e) {
 		RateLimitStatus rls = e.getRateLimitStatus();
 		if (rls != null && rls.getRemaining() == 0) {
 			System.out.println("Rate Limit Status exceeded");
-			sleepRandom(rls.getSecondsUntilReset() * 1000, 20);
+			sleepRandom(rls.getSecondsUntilReset(), 20);
 		}
 		return false;
 	}
