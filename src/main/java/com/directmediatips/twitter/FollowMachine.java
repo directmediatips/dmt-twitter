@@ -100,6 +100,7 @@ public class FollowMachine extends AbstractTwitterMachine {
 				addToList(list, ids);
 			} catch (TwitterException e) {
 				showErrorIfNecessary(e);
+				if (isBreakingError(e)) return;
 			}
 		}
 	}
@@ -118,6 +119,7 @@ public class FollowMachine extends AbstractTwitterMachine {
 				addToList(list, ids);
 			} catch (TwitterException e) {
 				showErrorIfNecessary(e);
+				if (isBreakingError(e)) { return; };
 			}
 		}
 	}	
