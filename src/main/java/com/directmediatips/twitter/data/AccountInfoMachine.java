@@ -129,16 +129,18 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	 * @throws TwitterException the twitter exception
 	 */
 	public void listFriends() throws SQLException, TwitterException {
-    	IDs ids = twitter.getFriendsIDs(-1);
+    	IDs ids = null;
     	connection.execute(String.format(WE_FOLLOWED_ON, account));
     	connection.execute(String.format(RESET_WE_FOLLOW, account));
+		long cursor =-1L;
     	do {
+            ids = twitter.getFriendsIDs(cursor);
     		for (long id : ids.getIDs()) {
    				insertAccount(id);
    				linkAccount(id);
 				setWeFollow(id);
     		}
-    	} while (ids.hasNext());
+        } while((cursor = ids.getNextCursor()) != 0);
     	connection.execute(String.format(SET_STARTFOLLOW, account));
 	}
 	
@@ -150,10 +152,12 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
 	 * @throws TwitterException the twitter exception
 	 */
 	public void listFollowers() throws SQLException, TwitterException {
-    	IDs ids = twitter.getFollowersIDs(-1);
+    	IDs ids = null;
     	connection.execute(String.format(THEY_FOLLOWED_ON, account));
     	connection.execute(String.format(RESET_THEY_FOLLOW, account));
+		long cursor =-1L;
     	do {
+    		ids = twitter.getFollowersIDs(cursor);
     		for (long id : ids.getIDs()) {
     			try {
     				insertAccount(id);
@@ -165,7 +169,7 @@ public class AccountInfoMachine extends AbstractTwitterMachine {
     				showErrorIfNecessary(e);
     			}
     		}
-    	} while (ids.hasNext());
+        } while((cursor = ids.getNextCursor()) != 0);
 	}
 	
 	
